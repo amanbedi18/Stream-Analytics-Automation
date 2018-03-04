@@ -1,0 +1,39 @@
+WITH 
+VEHICLELOCATIONDATA
+AS (
+SELECT 
+CAST(reading.header.vehicleid AS BIGINT) AS VehicleId,
+CAST(measures.ArrayValue.ts AS DATETIME) AS RecordedDate,
+CAST(CAST(measures.ArrayValue.glt AS FLOAT)/10000000 AS FLOAT)  AS Latitude,
+CAST(CAST(measures.ArrayValue.gln AS FLOAT)/10000000 AS FLOAT)  AS Longitude,
+CAST(DATEDIFF(ms,'0001-01-01',CAST(measures.ArrayValue.ts AS DATETIME)) As BIGINT) As DateTimeTicks
+FROM Telemetry AS reading
+CROSS APPLY GetArrayElements(reading.payload.measures) AS measures
+WHERE 
+    reading.header IS NOT NULL AND
+    reading.payload IS NOT NULL AND
+    reading.payload.measures IS NOT NULL
+),
+
+JoinedTelemetryData AS
+(
+	SELECT 
+    Header.*,
+    Teledata.*    
+		FROM VEHICLELOCATIONDATA
+		WHERE 
+		Teledata.[header.batchid] = Header.[header.batchid]
+		AND DATEDIFF(second,Header,Teledata) BETWEEN 0 AND 1
+),
+
+
+SELECT *
+INTO VehicleLocation
+FROM VEHICLELOCATIONDATA
+
+SELECT 
+'Location' AS PartitionKey,
+*
+INTO VehicleLastLocation
+FROM VEHICLELASTLOCATIONDATA
+

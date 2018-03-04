@@ -1,0 +1,21 @@
+{    
+   "properties":{    
+      "type":"stream",
+      "serialization": {
+        "type": "Json",
+        "properties": {
+          "encoding": "UTF8"
+        }
+    },  
+      "datasource":{    
+         "type":"Microsoft.ServiceBus/EventHub",
+        "properties": {
+          "ConsumerGroupName": "@ConsumerGroupName",
+          "eventHubName": "@EventHubName",
+          "sharedAccessPolicyName": "@EventHubccessPolicyName",
+          "sharedAccessPolicyKey": "@EventHubAccessPolicyKey",
+          "serviceBusNamespace": "@ServiceBusNamespace"
+        }  
+      }  
+   }  
+}

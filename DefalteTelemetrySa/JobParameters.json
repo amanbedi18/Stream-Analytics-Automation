@@ -1,0 +1,9 @@
+{
+  "Location" : "@Location",
+  "Properties": {
+    "EventsOutOfOrderPolicy": "Adjust",
+    "sku": {
+      "Name": "Standard"
+    }
+  }
+}

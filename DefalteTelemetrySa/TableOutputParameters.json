@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "datasource": {
+      "type": "Microsoft.Storage/Table",
+      "properties": {
+        "accountName": "@AccountName",
+        "accountKey": "@AccountKey",
+        "table": "@Table",
+        "partitionKey": "@PartitionKey",
+        "RowKey": "@RowKey",
+        "ColumnsToRemove": null,
+        "BatchSize": 1
+      }
+    }
+  }
+}

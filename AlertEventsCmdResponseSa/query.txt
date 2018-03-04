@@ -1,0 +1,29 @@
+WITH 
+
+CSVDIAGDATA
+AS (
+SELECT 
+reading.header.PROPERTY AS [header.PROPERTY],
+
+FROM Telemetry AS reading
+WHERE 
+    reading.header IS NOT NULL AND
+    reading.payload IS NOT NULL AND  
+    reading.header.PROPERTY IS NOT NULL AND  
+    LOWER(reading.header.mt) = 'diagnostics'    
+),
+
+DiagnosticsData AS
+(
+                SELECT 
+    Header.*,
+    Teledata.*    
+                                FROM CSVDIAGDATA Teledata                 
+                                WHERE Teledata.[header.PROPERTY] = Header.[header.PROPERTY] AND
+        Teledata.[header.uid] = Header.[header.uid]
+                                AND DATEDIFF(second,Header,Teledata) BETWEEN 0 AND 1
+)
+
+SELECT *
+INTO DatalakeDiagnostics
+FROM DiagnosticsData 

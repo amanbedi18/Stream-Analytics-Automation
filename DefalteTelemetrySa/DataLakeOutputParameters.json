@@ -1,0 +1,23 @@
+{
+  "Properties": {
+    "DataSource": {
+      "Properties": {
+        "DateFormat": "yyyy/MM/dd",
+        "TimeFormat": "HH",
+        "FilePathPrefix": "tcutelemetry/@FilePathPrefix/{date}/{time}",
+        "AccountName": "@AccountName",
+        "TenantId": "@TenantId",
+        "AccessToken": "@AccessToken",
+        "RefreshToken": "@RefreshToken"
+      },
+      "Type": "Microsoft.DataLake/Accounts"
+    },
+    "Serialization": {
+      "type": "CSV",
+      "properties": {
+        "fieldDelimiter": ",",
+        "encoding": "UTF8"
+      }
+    }
+  }
+}
